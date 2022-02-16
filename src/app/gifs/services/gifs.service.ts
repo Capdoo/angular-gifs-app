@@ -15,9 +15,21 @@ export class GifsService {
   }
 
   //Almacenamiento
-  buscarGifs(query: string){
+  buscarGifs(query: string = ''){
     
-    this._historial.unshift(query);
+    //Modificar solo en minuscula
+    query = query.trim().toLowerCase();
+
+    //Revisa si la entrada ya se incluye dentro de Historial
+    if(!this._historial.includes(query)){
+      this._historial.unshift(query);
+      this._historial = this._historial.splice(0,10);
+    }
+
+
+    //this._historial.unshift(query);
+
+
     console.log(this._historial);
 
   }
