@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Gif, SearchGIFResponse } from '../interfaces/gifs.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,23 @@ export class GifsService {
 
   private _historial: string[] = [];
   private apikey : string = 'Sg35dPJgZKmMisg19TZB4O1rEgWY6MMP';
-  
+  private api : string = 'https://api.giphy.com/v1/gifs';
+
   //TODO: Cambiar any por su tipo correspondiente
-  public resultados : any[] = [];
+  public resultados : Gif[] = [];
+  
 
   constructor( private http : HttpClient){
 
+    if(localStorage.getItem('historial')){
+      this._historial = JSON.parse(localStorage.getItem('historial')!);
+      this.resultados = JSON.parse(localStorage.getItem('resultados')!);
+    }
+
+
+
+    //Metodo 2
+    //this.buscarGifs(this._historial[0]);
   }
 
   get historial(){
@@ -23,7 +35,7 @@ export class GifsService {
   }
 
   //Almacenamiento
-  buscarGifs(query: string = ''){
+  public buscarGifs(query: string = ''){
     
     //Modificar solo en minuscula
     query = query.trim().toLowerCase();
@@ -32,12 +44,24 @@ export class GifsService {
     if(!this._historial.includes(query)){
       this._historial.unshift(query);
       this._historial = this._historial.splice(0,10);
+
+      localStorage.setItem('historial',JSON.stringify(this._historial));
     }
 
-    this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=Sg35dPJgZKmMisg19TZB4O1rEgWY6MMP&q=${query}`)
-      .subscribe( (resp: any) => {
+    const params = new HttpParams()
+        .set('api_key',this.apikey)
+        .set('limit','10')
+        .set('q',query);
+
+    console.log(params.toString());
+
+
+    this.http.get<SearchGIFResponse>(`${this.api}/search`,{params})
+      .subscribe( (resp) => {
         console.log(resp.data);
         this.resultados = resp.data;
+
+        localStorage.setItem('resultados',JSON.stringify(this.resultados));
       });
 
     console.log(this._historial);

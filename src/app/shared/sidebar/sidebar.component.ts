@@ -19,5 +19,9 @@ export class SidebarComponent{
 
   }
 
+  public buscarSingle(query: string) : void{
+
+    this.gifService.buscarGifs(query);
+  }
 
 }
