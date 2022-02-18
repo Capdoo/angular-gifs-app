@@ -1,2 +1,29 @@
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis a tenetur rerum autem repellendus eum voluptatibus ad. Minus accusamus quos, ipsum in eveniet ullam fugit impedit libero animi ut necessitatibus?
-      
+<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis a tenetur rerum autem repellendus eum voluptatibus ad. Minus accusamus quos, ipsum in eveniet ullam fugit impedit libero animi ut necessitatibus? -->
+<!--       
+
+<ul>
+    <li *ngFor="let gif of resultados">
+        {{gif.title}}
+    </li>
+</ul> -->
+
+<div class="row">
+
+    <div *ngFor="let gif of resultados"
+        class="col-md-4 col-sm-6">
+
+        <div class="card">
+            <img [src]="gif.images.downsized_medium.url" [alt]="gif.title"
+            class="card-img-top">
+            <div class="card-body">
+                <div class="card-text">
+                    {{gif.title}}
+                    <!-- {{gif.images.downsized_medium.url}} -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

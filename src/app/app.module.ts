@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { GifsModule } from './gifs/gifs.module';
 
+//Para Http
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import { GifsModule } from './gifs/gifs.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SharedModule,
     GifsModule
   ],
